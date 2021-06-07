@@ -37,3 +37,18 @@ exports.deleteUserById = async (req, res) => {
         }
     })
 }
+
+exports.updateUserById = async (req, res) => {
+    let user_id = req.params.id
+    let body = req.body;
+
+
+    for (let b in body) {
+        await db.query(
+            `UPDATE users_table SET ${b} = $1 WHERE user_id = $2`,
+            [body[b], user_id]
+        )
+    }
+
+    res.status(201).send(`Updated! Id: ${user_id}`)
+}

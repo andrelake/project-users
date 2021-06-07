@@ -1,6 +1,11 @@
 const express = require('express')
+let bodyParser = require('body-parser')
 
 const app = express()
+app.use(bodyParser.json({
+    type: 'application/json'
+}))
+
 const port = 3000
 
 app.listen(port, () => {
