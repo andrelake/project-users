@@ -8,6 +8,16 @@ exports.findAllUsers = async (_, res) => {
     res.status(200).send(response.rows)
 }
 
+exports.findUserById = async (req, res) => {
+    const user_id = req.params.id
+    const response = await db.query(
+        'SELECT * FROM users_table WHERE user_id = $1',
+        [user_id]
+    )
+    
+    res.status(200).send(response.rows)
+}
+
 exports.createUser = async (req, res) => {
     const { user_id, username, first_name, last_name, gender, password, status } = req.body
     const { rows } = await db.query(
@@ -41,7 +51,6 @@ exports.deleteUserById = async (req, res) => {
 exports.updateUserById = async (req, res) => {
     let user_id = req.params.id
     let body = req.body;
-
 
     for (let b in body) {
         await db.query(
